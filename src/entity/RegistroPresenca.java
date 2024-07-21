@@ -1,3 +1,4 @@
+package src.entity;
 import java.sql.Date;
 
 public class RegistroPresenca {
