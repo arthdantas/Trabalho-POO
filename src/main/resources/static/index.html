@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gerenciamento de Membros</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            margin: 20px;
+        }
+        input {
+            margin: 5px;
+        }
+    </style>
+    <script>
+        async function cadastrarMembro() {
+            const membro = {
+                nome: document.getElementById('nome').value,
+                matricula: document.getElementById('matricula').value,
+                email: document.getElementById('email').value,
+                senha: document.getElementById('senha').value,
+                atividades: document.getElementById('atividades').value
+            };
+
+            const response = await fetch('/membros/cadastrar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(membro)
+            });
+
+            if (response.ok) {
+                alert('Membro cadastrado com sucesso!');
+            } else {
+                alert('Erro ao cadastrar membro.');
+            }
+        }
+
+        async function deletarMembro() {
+            const matricula = document.getElementById('matricula').value;
+
+            const response = await fetch(`/membros/deletar/${matricula}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                alert('Membro deletado com sucesso!');
+            } else {
+                alert('Erro ao deletar membro.');
+            }
+        }
+
+        async function visualizarMembro() {
+            const matricula = document.getElementById('matricula').value;
+
+            const response = await fetch(`/membros/visualizar/${matricula}`);
+            if (response.ok) {
+                const membro = await response.json();
+                document.getElementById('nome').value = membro.nome;
+                document.getElementById('email').value = membro.email;
+                document.getElementById('senha').value = membro.senha;
+                document.getElementById('atividades').value = membro.atividades;
+                alert('Membro visualizado com sucesso!');
+            } else {
+                alert('Erro ao visualizar membro.');
+            }
+        }
+
+        async function atualizarMembro() {
+            const membro = {
+                nome: document.getElementById('nome').value,
+                matricula: document.getElementById('matricula').value,
+                email: document.getElementById('email').value,
+                senha: document.getElementById('senha').value,
+                atividades: document.getElementById('atividades').value
+            };
+
+            const response = await fetch('/membros/atualizar', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(membro)
+            });
+
+            if (response.ok) {
+                alert('Membro atualizado com sucesso!');
+            } else {
+                alert('Erro ao atualizar membro.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Gerenciamento de Membros</h1>
+    <form>
+        <input type="text" id="nome" placeholder="Nome"><br>
+        <input type="text" id="matricula" placeholder="Matrícula"><br>
+        <input type="email" id="email" placeholder="Email"><br>
+        <input type="password" id="senha" placeholder="Senha"><br>
+        <input type="text" id="atividades" placeholder="Atividades"><br>
+        <button type="button" onclick="cadastrarMembro()">Cadastrar</button>
+        <button type="button" onclick="deletarMembro()">Deletar</button>
+        <button type="button" onclick="visualizarMembro()">Visualizar</button>
+        <button type="button" onclick="atualizarMembro()">Atualizar</button>
+    </form>
+</body>
+</html>
