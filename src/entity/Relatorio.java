@@ -1,3 +1,5 @@
+package src.entity;
+
 public class Relatorio {
 
     private String descricao;

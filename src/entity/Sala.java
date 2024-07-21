@@ -1,3 +1,4 @@
+package src.entity;
 public class Sala {
     /*ATRIBUTOS*/
     private String nome;
